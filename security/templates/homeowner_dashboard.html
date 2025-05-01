@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Homeowner Dashboard</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <style>body { background-color: #121212; color: white; }</style>
+</head>
+<body>
+<section class="section">
+  <div class="container">
+    <h1 class="title has-text-white">Homeowner Dashboard</h1>
+
+    <div class="box">
+      <h2 class="subtitle">Recent Alerts</h2>
+      {% if alerts %}
+        <ul>
+          {% for alert in alerts %}
+            <li>
+              {{ alert.home_id }} | {{ alert.timestamp|date:"Y-m-d H:i" }} |
+              {% if alert.status == "Unresolved" %}
+                <span class="tag is-danger">{{ alert.status }}</span>
+              {% elif alert.status == "Pending" %}
+                <span class="tag is-warning">{{ alert.status }}</span>
+              {% elif alert.status == "Resolved" %}
+                <span class="tag is-success">{{ alert.status }}</span>
+              {% endif %}
+              {% if alert.status != "Resolved" %}
+                <a href="{% url 'resolve_alert' alert.id %}" class="button is-small is-success ml-2">Resolve</a>
+              {% endif %}
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p>No alerts yet.</p>
+      {% endif %}
+    </div>
+  </div>
+</section>
+</body>
+</html>

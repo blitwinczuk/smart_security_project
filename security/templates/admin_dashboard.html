@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <style>body { background-color: #121212; color: white; }</style>
+</head>
+<body>
+<section class="section">
+  <div class="container">
+    <h1 class="title has-text-white">Admin Dashboard</h1>
+
+    <div class="box">
+      <h2 class="subtitle">Active Alerts</h2>
+      {% if alerts %}
+        <table class="table is-fullwidth is-striped is-hoverable">
+          <thead>
+            <tr>
+              <th>Home ID</th>
+              <th>Timestamp</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for alert in alerts %}
+            <tr>
+              <td>{{ alert.home_id }}</td>
+              <td>{{ alert.timestamp|date:"Y-m-d H:i" }}</td>
+              <td>
+                {% if alert.status == "Unresolved" %}
+                  <span class="tag is-danger">{{ alert.status }}</span>
+                {% elif alert.status == "Pending" %}
+                  <span class="tag is-warning">{{ alert.status }}</span>
+                {% elif alert.status == "Resolved" %}
+                  <span class="tag is-success">{{ alert.status }}</span>
+                {% endif %}
+              </td>
+              <td>
+                {% if alert.status != "Resolved" %}
+                  <a href="{% url 'admin_update_status' alert.id %}" class="button is-small is-info">Update Status</a>
+                {% endif %}
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% else %}
+        <p>No active alerts.</p>
+      {% endif %}
+    </div>
+  </div>
+</section>
+</body>
+</html>
