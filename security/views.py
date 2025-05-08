@@ -9,10 +9,10 @@ def features(request):
 
 def team(request):
     members = [
-        {"name": "Alice", "role": "Backend"},
-        {"name": "Bob", "role": "Frontend"},
-        {"name": "Charlie", "role": "Hardware"},
-        {"name": "Dina", "role": "PM"},
+        {"name": "Ayo", "role": "Hardware and Presentation"},
+        {"name": "Luka", "role": "Hardware"},
+        {"name": "Zain", "role": "Web Development"},
+        {"name": "Barty", "role": "Web Development and Project Planner"},
     ]
     return render(request, 'team.html', {"members": members})
 

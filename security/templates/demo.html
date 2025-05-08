@@ -3,13 +3,32 @@
 <head>
   <title>Demo</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
-  <style>body { background-color: #121212; color: white; }</style>
+  <style>
+    body { background-color: #121212; color: white; }
+    iframe {
+      border: none;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+      margin-top: 2rem;
+    }
+  </style>
 </head>
 <body>
 <section class="section">
   <div class="container has-text-centered">
-    <h1 class="title has-text-white">Demo Coming Soon</h1>
-    <p class="subtitle">Video demonstration or screenshots will appear here.</p>
+    <h1 class="title has-text-white">Project Demonstration</h1>
+    <p class="subtitle">Watch the Smart Security System in action below:</p>
+
+    <!-- Embedded YouTube Video -->
+    <div class="video-container">
+    <iframe width="720" height="405"
+        src="https://www.youtube.com/embed/XTfpJJQKoN4"
+        title="Demo video"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen>
+    </iframe>
+    </div>
   </div>
 </section>
 </body>

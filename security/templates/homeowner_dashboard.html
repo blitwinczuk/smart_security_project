@@ -3,7 +3,15 @@
 <head>
   <title>Homeowner Dashboard</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
-  <style>body { background-color: #121212; color: white; }</style>
+  <style>
+    body { background-color: #121212; color: white; }
+    img.alert-image {
+      max-width: 200px;
+      border-radius: 10px;
+      margin-top: 10px;
+      box-shadow: 0 0 10px rgba(255,255,255,0.1);
+    }
+  </style>
 </head>
 <body>
 <section class="section">
@@ -11,22 +19,40 @@
     <h1 class="title has-text-white">Homeowner Dashboard</h1>
 
     <div class="box">
-      <h2 class="subtitle">Recent Alerts</h2>
+      <h2 class="subtitle has-text-white">Recent Alerts</h2>
+
       {% if alerts %}
         <ul>
           {% for alert in alerts %}
-            <li>
-              {{ alert.home_id }} | {{ alert.timestamp|date:"Y-m-d H:i" }} |
-              {% if alert.status == "Unresolved" %}
-                <span class="tag is-danger">{{ alert.status }}</span>
-              {% elif alert.status == "Pending" %}
-                <span class="tag is-warning">{{ alert.status }}</span>
-              {% elif alert.status == "Resolved" %}
-                <span class="tag is-success">{{ alert.status }}</span>
+            <li style="margin-bottom: 2rem;">
+              <strong>Home ID:</strong> {{ alert.home_id }}<br>
+              <strong>Time:</strong> {{ alert.timestamp|date:"Y-m-d H:i" }}<br>
+
+              {% if alert.image %}
+                <img src="{{ alert.image.url }}" class="alert-image" alt="Alert Image">
+              {% else %}
+                <p><em>No image uploaded</em></p>
               {% endif %}
-              {% if alert.status != "Resolved" %}
-                <a href="{% url 'resolve_alert' alert.id %}" class="button is-small is-success ml-2">Resolve</a>
-              {% endif %}
+
+              <p>
+                <strong>Status:</strong>
+                {% if alert.status == "Unresolved" %}
+                  <span class="tag is-danger">{{ alert.status }}</span>
+                {% elif alert.status == "Pending" %}
+                  <span class="tag is-warning">{{ alert.status }}</span>
+                {% elif alert.status == "Resolved" %}
+                  <span class="tag is-success">{{ alert.status }}</span>
+                {% endif %}
+              </p>
+
+              <div style="margin-top: 8px;">
+                {% if alert.status != "Resolved" %}
+                  <a href="{% url 'resolve_alert' alert.id %}" class="button is-small is-success">Resolve</a>
+                {% endif %}
+
+                <!-- Optional: Add admin URL for image upload -->
+                <a href="/admin/security/motionalert/{{ alert.id }}/change/" class="button is-small is-warning">Update Image</a>
+              </div>
             </li>
           {% endfor %}
         </ul>
